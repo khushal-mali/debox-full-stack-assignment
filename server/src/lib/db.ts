@@ -1,11 +1,15 @@
+import { Redis } from "@upstash/redis";
 import mongoose from "mongoose";
-import Redis from "ioredis";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const MONGODB_URI: string = process.env.MONGODB_URI!;
-const REDIS_URL: string = process.env.REDIS_URL!;
+const REDIS_URL: string = process.env.UPSTASH_REDIS_URL!;
+const REDIS_TOKEN: string = process.env.UPSTASH_REDIS_TOKEN!;
 
-if (!MONGODB_URI || !REDIS_URL) {
-  throw new Error("Missing MONGODB_URI or REDIS_URL");
+if (!MONGODB_URI || !REDIS_URL || !REDIS_TOKEN) {
+  throw new Error("Missing MONGODB_URI or REDIS_URL or REDIS_TOKEN");
 }
 
 let mongooseConnected: boolean = false;
@@ -24,21 +28,25 @@ export async function connectMongoDB(): Promise<void> {
 }
 
 export function connectRedis(): Redis {
-  if (redisClient) return redisClient;
-  try {
-    redisClient = new Redis(REDIS_URL);
-    redisClient.on("connect", () => console.log("Redis connected"));
-    redisClient.on("error", (error) => console.error("Redis connection error:", error));
+  if (redisClient) {
     return redisClient;
-  } catch (error) {
-    console.error("Redis connection error:", error);
-    throw error;
   }
+
+  redisClient = new Redis({
+    url: REDIS_URL,
+    token: REDIS_TOKEN,
+  });
+  return redisClient;
 }
 
 export async function getCachedToken(token: string): Promise<string | null> {
-  const client = connectRedis();
-  return client.get(`jwt:${token}`);
+  try {
+    const client = connectRedis();
+    return await client.get(`jwt:${token}`);
+  } catch (error) {
+    console.error("Redis getCachedToken error:", error);
+    return null; // Fallback to JWT verification
+  }
 }
 
 export async function setCachedToken(
@@ -46,11 +54,20 @@ export async function setCachedToken(
   userId: string,
   expiry: number = 3600
 ): Promise<void> {
-  const client = connectRedis();
-  await client.set(`jwt:${token}`, userId, "EX", expiry);
+  try {
+    const client = connectRedis();
+    await client.set(`jwt:${token}`, userId, { ex: expiry });
+  } catch (error) {
+    console.error("Redis setCachedToken error:", error);
+    // Continue without crashing
+  }
 }
 
 export async function deleteCachedToken(token: string): Promise<void> {
-  const client = connectRedis();
-  await client.del(`jwt:${token}`);
+  try {
+    const client = connectRedis();
+    await client.del(`jwt:${token}`);
+  } catch (error) {
+    console.error("Redis deleteCachedToken error:", error);
+  }
 }

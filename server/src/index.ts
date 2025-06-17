@@ -1,7 +1,10 @@
 import express, { Application, Request, Response, NextFunction } from "express";
 import cors from "cors";
+import dotenv from "dotenv";
 import { connectMongoDB } from "./lib/db";
 import authRoutes from "./routes/auth.route";
+
+dotenv.config();
 
 const app: Application = express();
 const PORT: number = parseInt(process.env.PORT || "5000", 10);
