@@ -12,7 +12,6 @@
       "node",
       "express",
       "mongoose",
-      "redis",
       "bcryptjs",
       "jsonwebtoken",
       "csv-parse",
