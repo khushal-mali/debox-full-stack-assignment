@@ -1,6 +1,6 @@
-import mongoose, { Schema, model, Model } from "mongoose";
+import mongoose, { Schema, model, Model, Document } from "mongoose";
 
-interface IInventory {
+export interface IInventory extends Document {
   productId: mongoose.Types.ObjectId;
   available: number;
   sold: number;

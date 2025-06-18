@@ -1,6 +1,6 @@
-import mongoose, { Schema, model, Model } from "mongoose";
+import mongoose, { model, Model, Schema } from "mongoose";
 
-interface ICategory {
+interface ICategory  {
   name: string;
   description: string;
   products: mongoose.Types.ObjectId[];
