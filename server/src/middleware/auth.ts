@@ -38,7 +38,8 @@ export const authMiddleware = async (
 
 export const masterOnly = (req: AuthRequest, res: Response, next: NextFunction) => {
   if (req.user?.role !== "Master") {
-    return res.status(403).json({ error: "Forbidden" });
+    res.status(403).json({ error: "Forbidden" });
+    return;
   }
   next();
 };
