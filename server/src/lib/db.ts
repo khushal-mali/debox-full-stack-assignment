@@ -71,3 +71,35 @@ export async function deleteCachedToken(token: string): Promise<void> {
     console.error("Redis deleteCachedToken error:", error);
   }
 }
+
+export async function getCachedData(key: string): Promise<string | null> {
+  try {
+    const client = connectRedis();
+    return await client.get(`${key}`);
+  } catch (error) {
+    console.error("Redis getCachedData error:", error);
+    return null; // Fallback to JWT verification
+  }
+}
+
+export async function setCachedData(
+  key: string,
+  data: string,
+  expiry: number = 3600
+): Promise<void> {
+  try {
+    const client = connectRedis();
+    await client.set(`${key}`, data, { ex: expiry });
+  } catch (error) {
+    console.error("Redis setCachedData error:", error);
+  }
+}
+
+export async function deleteCachedData(key: string): Promise<void> {
+  try {
+    const client = connectRedis();
+    await client.del(`${key}`);
+  } catch (error) {
+    console.error("Redis deleteCachedData error:", error);
+  }
+}
