@@ -19,13 +19,13 @@ export const authMiddleware = async (
   try {
     const cachedUserId = await getCachedToken(token);
     if (cachedUserId) {
-      req.user = { id: cachedUserId, role: "Master" }; // Simplified; role would be stored in cache or token
+      req.user = { id: cachedUserId, role: "MASTER" }; // Simplified; role would be stored in cache or token
       return next();
     }
 
     const decoded = jwt.verify(token, JWT_SECRET) as {
       id: string;
-      role: "Master" | "Admin";
+      role: "MASTER" | "ADMIN";
     };
     req.user = decoded;
     await setCachedToken(token, decoded.id);
@@ -37,7 +37,7 @@ export const authMiddleware = async (
 };
 
 export const masterOnly = (req: AuthRequest, res: Response, next: NextFunction) => {
-  if (req.user?.role !== "Master") {
+  if (req.user?.role !== "MASTER") {
     res.status(403).json({ error: "Forbidden" });
     return;
   }
