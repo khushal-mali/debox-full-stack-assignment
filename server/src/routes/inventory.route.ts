@@ -27,11 +27,19 @@ router.get("/", authMiddleware, async (req: Request, res: Response) => {
     const cacheKey = "inventory";
     const cached = await getCachedData(cacheKey);
     if (cached) {
-      res.json(JSON.parse(cached));
-      return;
+      try {
+        // Ensure cached is a string and parse it
+        const parsed = typeof cached === "string" ? JSON.parse(cached) : cached;
+        res.json(parsed);
+        return;
+      } catch (parseError) {
+        console.error("Cache parse error:", parseError);
+        // Proceed to fetch from DB if parsing fails
+      }
     }
 
     const inventory = await Inventory.find().populate("productId", "name").lean();
+    console.log(inventory);
     await setCachedData(cacheKey, JSON.stringify(inventory), 3600);
     res.json(inventory);
   } catch (error) {
