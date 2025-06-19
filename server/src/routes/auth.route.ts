@@ -17,7 +17,7 @@ const loginSchema = z.object({
 const signupSchema = z.object({
   email: z.string().email(),
   password: z.string().min(6),
-  role: z.enum(["Master", "Admin"]),
+  role: z.enum(["MASTER", "ADMIN"]),
 });
 
 router.post("/login", async (req: Request, res: Response) => {
@@ -61,7 +61,7 @@ router.post("/signup", authMiddleware, async (req: AuthRequest, res: Response) =
     await connectMongoDB();
     const { email, password, role } = signupSchema.parse(req.body);
 
-    if (role === "Master" && req.user?.role !== "Master") {
+    if (role === "MASTER" && req.user?.role !== "MASTER") {
       res.status(403).json({ error: "Only Master users can create Master accounts" });
       return;
     }
