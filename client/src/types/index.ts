@@ -1,7 +1,28 @@
 export interface User {
-  id: string;
+  _id: string;
   email: string;
-  role: "Master" | "Admin";
+  role: "MASTER" | "ADMIN";
+}
+
+export interface Product {
+  _id: string;
+  name: string;
+  description: string;
+  price: number;
+  categories: Category[];
+}
+
+export interface Category {
+  _id: string;
+  name: string;
+  description: string;
+  products: Product[];
+}
+
+export interface Inventory {
+  _id: string;
+  productId: Product;
+  available: number;
 }
 
 export interface LoginResponse {
