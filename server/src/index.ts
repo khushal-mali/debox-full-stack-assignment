@@ -16,15 +16,20 @@ const PORT: number = parseInt(process.env.PORT || "5000");
 
 // Middleware
 // ✅ CORS configuration
+// Set this before your routes
 const corsOptions = {
-  origin: process.env.CLIENT_URL || "http://localhost:3000", // Allow only specific origin
-  credentials: true, // Allow cookies / Authorization headers
+  origin: "https://debox-full-stack-assignment.vercel.app",
+  credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 };
 
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// This handles preflight (OPTIONS) requests for all routes
+app.options("*", cors(corsOptions));
 
 // Use morgan to log requests (only in development)
 if (process.env.NODE_ENV !== "production") {
