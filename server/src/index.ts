@@ -44,7 +44,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/inventory", inventoryRoutes);
 app.use("/api/upload", csvRoutes);
 
-app.get("/api/test", (req, res) => {
+app.get("/", (req, res) => {
   res.json({ status: "Success" });
 });
 
