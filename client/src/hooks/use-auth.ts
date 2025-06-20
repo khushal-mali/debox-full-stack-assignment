@@ -31,8 +31,8 @@ export function useAuth() {
       toast.success("Logged in successfully");
       router.push("/products");
     },
-    onError: () => {
-      toast.error("Invalid credentials");
+    onError: (error: any) => {
+      toast.error(error.message);
     },
   });
 
