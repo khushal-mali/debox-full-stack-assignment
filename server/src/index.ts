@@ -31,6 +31,11 @@ app.use("/api/products", productRoutes);
 app.use("/api/inventory", inventoryRoutes);
 app.use("/api/upload", csvRoutes);
 
+app.get("/api/test", (req, res) => {
+  res.json({ status: "Success" });
+  return;
+});
+
 // Error handling middleware
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack);
