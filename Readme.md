@@ -8,7 +8,7 @@ The Admin Panel is a full-stack web application for managing products, categorie
 
 - **Email**: `master@debox.com`
 - **Password**: `password`
-  Ensure this user exists in the database (see [How to Start the App](#how-to-start-the-app)).
+
 
 ## How to Start the App
 
