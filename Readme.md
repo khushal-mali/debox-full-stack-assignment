@@ -37,9 +37,11 @@ The Admin Panel is a full-stack web application for managing products, categorie
 
    ```
    MONGODB_URI=mongodb+srv://khushalmali8448:x6tE2HXxrdaBii5D@debox-assignment.nu1hyr0.mongodb.net/?retryWrites=true&w=majority&appName=debox-assignment
-   UPSTASH_REDIS_URL=<your-upstash-redis-url>
-   UPSTASH_REDIS_TOKEN=<your-upstash-redis-token>
-   JWT_SECRET=your-secret-key
+   JWT_SECRET=jwt-secret
+   PORT=5000
+   UPSTASH_REDIS_URL=https://wealthy-gnu-17671.upstash.io
+   UPSTASH_REDIS_TOKEN=AUUHAAIjcDE3NjJlODNmNTlhZjM0YTU4ODAxMjJjZDEzMTE2Y2Q4ZHAxMA
+
    ```
 
 4. **Start Backend**:
