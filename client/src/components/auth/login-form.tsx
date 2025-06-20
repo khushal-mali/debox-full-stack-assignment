@@ -41,7 +41,7 @@ export function LoginForm() {
       router.push("/products");
     } catch (error: any) {
       console.log("login-form:", new Error().stack?.split("\n")[1].trim(), error);
-      toast.error("Invalid credentials");
+      toast.error(error?.message);
     }
   }
 
