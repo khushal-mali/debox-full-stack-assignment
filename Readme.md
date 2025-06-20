@@ -36,7 +36,7 @@ The Admin Panel is a full-stack web application for managing products, categorie
 3. **Configure Environment** (create `backend/.env`):
 
    ```
-   MONGODB_URI=mongodb://localhost:27017/admin-panel
+   MONGODB_URI=mongodb+srv://khushalmali8448:x6tE2HXxrdaBii5D@debox-assignment.nu1hyr0.mongodb.net/?retryWrites=true&w=majority&appName=debox-assignment
    UPSTASH_REDIS_URL=<your-upstash-redis-url>
    UPSTASH_REDIS_TOKEN=<your-upstash-redis-token>
    JWT_SECRET=your-secret-key
@@ -592,7 +592,6 @@ Uploads a CSV file to bulk-create products (Master-only).
   - 400 Bad Request: Missing file, invalid data, or fewer than 20 records.
   - 403 Forbidden: Not a Master user.
   - 500 Server Error: Internal error.
-
 
 ## Notes
 
