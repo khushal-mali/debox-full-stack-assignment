@@ -46,6 +46,7 @@ app.use("/api/upload", csvRoutes);
 
 app.get("/", (req, res) => {
   res.json({ status: "Success" });
+  return;
 });
 
 // Error handling middleware
