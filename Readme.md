@@ -9,7 +9,6 @@ The Admin Panel is a full-stack web application for managing products, categorie
 - **Email**: `master@debox.com`
 - **Password**: `password`
 
-
 ## How to Start the App
 
 ### Prerequisites
@@ -121,7 +120,7 @@ The Admin Panel is a full-stack web application for managing products, categorie
 - **Data Management**:
   - CRUD operations for categories, products, and inventory.
   - Populated relationships (e.g., category products, product categories).
-- **Caching**: Upstash Redis caches `/api/categories` and `/api/products` responses for performance.
+- **Caching**: Upstash Redis caches `/api/categories`, `/api/products` and `/api/inventories` responses for performance.
 - **UI/UX**: Modern, responsive interface with Shadcn/UI components, Tailwind styling, and Sonner toasts.
 - **Validation**: Zod for backend request validation, ensuring robust data integrity.
 
