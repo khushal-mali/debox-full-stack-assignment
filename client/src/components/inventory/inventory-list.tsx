@@ -80,6 +80,12 @@ export function InventoryList() {
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
               </TableHead>
+              <TableHead>
+                <Button variant="ghost" onClick={() => handleSort("sold")}>
+                  Sold
+                  <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+              </TableHead>
               {user?.role === "MASTER" && <TableHead>Actions</TableHead>}
             </TableRow>
           </TableHeader>
@@ -98,6 +104,7 @@ export function InventoryList() {
                 <TableRow key={inventory._id}>
                   <TableCell>{inventory?.productId?.name}</TableCell>
                   <TableCell>{inventory.available}</TableCell>
+                  <TableCell>{inventory.sold}</TableCell>
                   {user?.role === "MASTER" && (
                     <TableCell>
                       <div className="flex gap-2">

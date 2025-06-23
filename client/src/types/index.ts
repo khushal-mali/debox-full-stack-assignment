@@ -23,6 +23,7 @@ export interface Inventory {
   _id: string;
   productId: Product;
   available: number;
+  sold: number;
 }
 
 export interface LoginResponse {
