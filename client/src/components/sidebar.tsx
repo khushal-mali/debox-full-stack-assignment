@@ -8,6 +8,7 @@ import { LogOut, Menu, Package, List, Upload, UserPlus } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useState } from "react";
 import { toast } from "sonner";
+import { ThemeModeToggle } from "./dark-mode-toggle-btn";
 
 export function Sidebar() {
   const { user, logout, isLoading } = useAuth();
@@ -64,6 +65,7 @@ export function Sidebar() {
       )}
       {user && (
         <div className="p-4 border-t">
+          <ThemeModeToggle />
           <Button
             variant="ghost"
             className="w-full justify-start text-left"
