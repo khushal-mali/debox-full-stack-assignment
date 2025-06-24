@@ -1,8 +1,5 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -13,9 +10,18 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useAuth } from "@/hooks/use-auth";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-import { authService } from "@/api/auth";
+import { z } from "zod";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 const formSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -24,7 +30,7 @@ const formSchema = z.object({
 });
 
 export function SignupForm() {
-  const router = useRouter();
+  const { signup } = useAuth();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -37,9 +43,8 @@ export function SignupForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      await authService.register(values);
-      toast.success("User registered successfully");
-      router.push("/products");
+      signup(values);
+      form.reset();
     } catch (error) {
       console.log("signup-form:", new Error().stack?.split("\n")[1].trim(), error);
       toast.error("Failed to register user");
@@ -82,10 +87,15 @@ export function SignupForm() {
             <FormItem>
               <FormLabel>Role</FormLabel>
               <FormControl>
-                <select {...field} className="w-full border p-2 rounded">
-                  <option value="MASTER">Master</option>
-                  <option value="ADMIN">Admin</option>
-                </select>
+                <Select>
+                  <SelectTrigger className="w-full">
+                    <SelectValue {...field} placeholder="Select the role" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="MASTER">Master</SelectItem>
+                    <SelectItem value="ADMIN">Admin</SelectItem>
+                  </SelectContent>
+                </Select>
               </FormControl>
               <FormMessage />
             </FormItem>

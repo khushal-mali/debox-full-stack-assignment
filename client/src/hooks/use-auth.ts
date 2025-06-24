@@ -21,6 +21,24 @@ export function useAuth() {
     staleTime: Infinity,
   });
 
+  const signupMutation = useMutation({
+    mutationFn: ({
+      email,
+      password,
+      role,
+    }: {
+      email: string;
+      password: string;
+      role: "MASTER" | "ADMIN";
+    }) => authService.register({ email, password, role }),
+    onSuccess: () => {
+      toast.success("Logged in successfully");
+    },
+    onError: (error: any) => {
+      toast.error(error.message);
+    },
+  });
+
   const loginMutation = useMutation({
     mutationFn: ({ email, password }: { email: string; password: string }) =>
       authService.login(email, password),
@@ -60,6 +78,7 @@ export function useAuth() {
     user: userQuery.data,
     isLoading: userQuery.isLoading,
     login: loginMutation.mutate,
+    signup: signupMutation.mutate,
     logout: logoutMutation.mutate,
     isLoggingIn: loginMutation.isPending,
     isLoggingOut: logoutMutation.isPending,

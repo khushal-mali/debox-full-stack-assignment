@@ -37,7 +37,7 @@ export function LoginForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       login({ email: values.email, password: values.password });
-      toast.success("Logged in successfully");
+      form.reset();
       router.push("/products");
     } catch (error: any) {
       console.log("login-form:", new Error().stack?.split("\n")[1].trim(), error);
