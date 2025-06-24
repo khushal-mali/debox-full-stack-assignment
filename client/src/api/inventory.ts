@@ -4,7 +4,6 @@ import { Inventory } from "@/types";
 export const inventoryService = {
   getAll: async (): Promise<Inventory[]> => {
     const response = await api.get("/inventory");
-    console.log(response.data);
     return response.data;
   },
 
