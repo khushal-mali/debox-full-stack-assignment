@@ -1,7 +1,5 @@
 import express, { Request, Response, Router } from "express";
 import { z } from "zod";
-// import { Category } from "../models/category";
-// import { Product } from "../models/product";
 import {
   connectMongoDB,
   getCachedData,
