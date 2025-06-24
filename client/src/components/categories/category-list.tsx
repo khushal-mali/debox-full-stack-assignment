@@ -16,6 +16,14 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { CategoryForm } from "./category-form";
 import { Category } from "@/types";
 import { useCategories } from "@/hooks/use-categories";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 
 type SortKey = keyof Category | "products";
 type SortOrder = "asc" | "desc";
@@ -99,12 +107,23 @@ export function CategoryList() {
             ) : paginatedCategories.length ? (
               paginatedCategories.map((category) => (
                 <TableRow key={category._id}>
-                  <TableCell>{category.name}</TableCell>
+                  <TableCell className="max-w-8 truncate">{category.name}</TableCell>
                   <TableCell className="max-w-14 truncate">
                     {category.description}
                   </TableCell>
                   <TableCell className="max-w-14 truncate">
-                    {category.products.map((prod) => prod.name).join(", ")}
+                    <DropdownMenu>
+                      <DropdownMenuTrigger className="w-full text-start truncate">
+                        {category.products.map((prod) => prod.name).join(", ")}
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        <DropdownMenuLabel>{category.name}</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        {category.products.map((prod) => (
+                          <DropdownMenuItem key={prod._id}>{prod.name}</DropdownMenuItem>
+                        ))}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </TableCell>
                   {user?.role === "MASTER" && (
                     <TableCell>
