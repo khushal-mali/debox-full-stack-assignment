@@ -16,6 +16,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { ProductForm } from "./product-form";
 import { Product } from "@/types";
 import { useProducts } from "@/hooks/use-products";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 type SortKey = keyof Product | "categories";
 type SortOrder = "asc" | "desc";
@@ -110,7 +111,14 @@ export function ProductList() {
                 <TableRow key={product._id}>
                   <TableCell>{product.name}</TableCell>
                   <TableCell className="max-w-14 truncate">
-                    {product.description}
+                    <Tooltip>
+                      <TooltipTrigger className="w-full text-start truncate">
+                        {product.description}
+                      </TooltipTrigger>
+                      <TooltipContent className="w-full">
+                        <p>{product.description}</p>
+                      </TooltipContent>
+                    </Tooltip>
                   </TableCell>
                   <TableCell>${product.price.toFixed(2)}</TableCell>
                   <TableCell>

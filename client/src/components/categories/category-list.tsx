@@ -24,6 +24,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 type SortKey = keyof Category | "products";
 type SortOrder = "asc" | "desc";
@@ -109,7 +110,14 @@ export function CategoryList() {
                 <TableRow key={category._id}>
                   <TableCell className="max-w-8 truncate">{category.name}</TableCell>
                   <TableCell className="max-w-14 truncate">
-                    {category.description}
+                    <Tooltip>
+                      <TooltipTrigger className="w-full text-start truncate">
+                        {category.description}
+                      </TooltipTrigger>
+                      <TooltipContent className="w-full">
+                        <p>{category.description}</p>
+                      </TooltipContent>
+                    </Tooltip>
                   </TableCell>
                   <TableCell className="max-w-14 truncate">
                     <DropdownMenu>
