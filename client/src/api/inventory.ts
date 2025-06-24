@@ -13,7 +13,11 @@ export const inventoryService = {
     return response.data;
   },
 
-  create: async (data: { productId: string; quantity: number }): Promise<Inventory> => {
+  create: async (data: {
+    productId: string;
+    available: number;
+    sold: number;
+  }): Promise<Inventory> => {
     const response = await api.post("/inventory", data);
     return response.data;
   },
@@ -22,7 +26,8 @@ export const inventoryService = {
     id: string,
     data: {
       productId: string;
-      quantity: number;
+      available: number;
+      sold: number;
     }
   ): Promise<Inventory> => {
     const response = await api.put(`/inventory/${id}`, data);

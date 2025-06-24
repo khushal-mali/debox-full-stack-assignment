@@ -27,7 +27,8 @@ import { useInventory } from "@/hooks/use-inventory";
 
 const formSchema = z.object({
   productId: z.string().min(1, "Product is required"),
-  quantity: z.number().min(0, "Quantity must be non-negative"),
+  available: z.number().min(0, "Quantity must be non-negative"),
+  sold: z.number().min(0, "Sold must be non-negative"),
 });
 
 type InventoryFormProps = {
@@ -43,7 +44,8 @@ export function InventoryForm({ inventory, onSuccess }: InventoryFormProps) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       productId: inventory?.productId._id || "",
-      quantity: inventory?.available || 0,
+      available: inventory?.available || 0,
+      sold: inventory?.sold || 0,
     },
   });
 
@@ -51,7 +53,8 @@ export function InventoryForm({ inventory, onSuccess }: InventoryFormProps) {
     if (inventory) {
       form.reset({
         productId: inventory.productId._id,
-        quantity: inventory.available,
+        available: inventory.available,
+        sold: inventory.sold,
       });
     }
   }, [inventory, form]);
@@ -94,10 +97,28 @@ export function InventoryForm({ inventory, onSuccess }: InventoryFormProps) {
         />
         <FormField
           control={form.control}
-          name="quantity"
+          name="available"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Quantity</FormLabel>
+              <FormLabel>Available</FormLabel>
+              <FormControl>
+                <Input
+                  type="number"
+                  placeholder="Enter available quantity"
+                  {...field}
+                  onChange={(e) => field.onChange(parseInt(e.target.value))}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="sold"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Sold</FormLabel>
               <FormControl>
                 <Input
                   type="number"

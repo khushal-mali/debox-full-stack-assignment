@@ -12,7 +12,7 @@ export function useInventory() {
   });
 
   const createMutation = useMutation({
-    mutationFn: (data: { productId: string; quantity: number }) =>
+    mutationFn: (data: { productId: string; available: number; sold: number }) =>
       inventoryService.create(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["inventory"] });
@@ -29,14 +29,15 @@ export function useInventory() {
       data,
     }: {
       id: string;
-      data: { productId: string; quantity: number };
+      data: { productId: string; available: number; sold: number };
     }) => inventoryService.update(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["inventory"] });
       toast.success("Inventory updated successfully");
     },
-    onError: () => {
+    onError: (error) => {
       toast.error("Failed to update inventory");
+      console.log("use-inventory:", new Error().stack?.split("\n")[1].trim(), error);
     },
   });
 
