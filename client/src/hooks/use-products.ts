@@ -16,6 +16,7 @@ export function useProducts() {
       name: string;
       description: string;
       price: number;
+      stock: number;
       categoryIds: string[];
     }) => productService.create(data),
     onSuccess: () => {
@@ -37,6 +38,7 @@ export function useProducts() {
         name: string;
         description: string;
         price: number;
+        stock: number;
         categoryIds: string[];
       };
     }) => productService.update(id, data),

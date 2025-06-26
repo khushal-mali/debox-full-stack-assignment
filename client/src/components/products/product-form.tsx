@@ -30,6 +30,7 @@ const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
   description: z.string().min(1, "Description is required"),
   price: z.number().min(0, "Price must be non-negative"),
+  stock: z.number().min(0, "Stock must be non-negative"),
   categoryIds: z.array(z.string()).min(1, "At least one category is required"),
 });
 
@@ -48,6 +49,7 @@ export function ProductForm({ product, onSuccess }: ProductFormProps) {
       name: product?.name || "",
       description: product?.description || "",
       price: product?.price || 0,
+      stock: product?.stock || 0,
       categoryIds: product?.categories.map((cat) => cat._id) || [],
     },
   });
@@ -112,6 +114,26 @@ export function ProductForm({ product, onSuccess }: ProductFormProps) {
                   type="number"
                   step="0.01"
                   placeholder="Enter price"
+                  {...field}
+                  onChange={(e) => field.onChange(parseFloat(e.target.value))}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="stock"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Stock</FormLabel>
+              <FormControl>
+                <Input
+                  type="number"
+                  step="1"
+                  placeholder="Enter price"
+                  min={"0"}
                   {...field}
                   onChange={(e) => field.onChange(parseFloat(e.target.value))}
                 />

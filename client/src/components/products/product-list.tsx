@@ -93,6 +93,12 @@ export function ProductList() {
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
               </TableHead>
+              <TableHead>
+                <Button variant="ghost" onClick={() => handleSort("stock")}>
+                  Stock
+                  <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+              </TableHead>
               {user?.role === "MASTER" && <TableHead>Actions</TableHead>}
             </TableRow>
           </TableHeader>
@@ -124,6 +130,7 @@ export function ProductList() {
                   <TableCell>
                     {product.categories.map((cat) => cat.name).join(", ")}
                   </TableCell>
+                  <TableCell>{product.stock}</TableCell>
                   {user?.role === "MASTER" && (
                     <TableCell>
                       <div className="flex gap-2">

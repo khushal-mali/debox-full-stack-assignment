@@ -54,6 +54,8 @@ router.post("/", [authMiddleware, masterOnly], async (req: Request, res: Respons
       req.body
     );
 
+    console.log(req.body);
+
     const product = new Product({
       name,
       description,

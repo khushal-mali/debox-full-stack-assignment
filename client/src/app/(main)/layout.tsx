@@ -12,7 +12,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
     if (!isLoading && !user) {
       router.push("/login");
     }
-  }, [user, isLoading, router]);
+  }, [user, isLoading, router]); 
 
   if (isLoading) {
     return <div>Loading...</div>;
